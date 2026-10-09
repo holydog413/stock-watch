@@ -24,8 +24,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Fetch market data (Yahoo Finance, server-side)
@@ -40,7 +40,7 @@ jobs:
             && python -c "import json,sys; d=json.load(open('/tmp/prev.json')); sys.exit(0 if d.get('stocks') else 1)" \
             && cp /tmp/prev.json site/data.json || echo "No previous data available; publishing empty data (page shows 'data unavailable')"
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site
       - id: deployment
