@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Watch — Low-Price Movers</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+<header>
+  <div class="title"><h1>📈 Stock Watch</h1><span class="sub">US stocks $0.50–$10 · volume &gt; 1M · big daily moves</span></div>
+  <div class="status">
+    <span id="mkt" class="pill">Market: …</span>
+    <span id="updated" class="muted">Last updated: …</span>
+    <button id="refresh" title="Reload data">⟳</button>
+  </div>
+</header>
+<div class="disclaimer">⚠️ <b>Not financial advice.</b> Signals and scores below are simple technical-indicator heuristics, <b>not predictions</b>. Low-priced, high-volatility stocks can lose most of their value quickly. Data is delayed (~15 min or more) and may be incomplete. Do your own research and only risk money you can afford to lose.</div>
+<main>
+  <section id="lists">
+    <div class="tabs">
+      <button data-tab="gainers" class="active">Top gainers</button>
+      <button data-tab="active">Most active</button>
+      <button data-tab="losers">Top losers</button>
+    </div>
+    <div id="tablewrap"><p class="muted pad">Loading…</p></div>
+  </section>
+  <section id="detail">
+    <div id="detailEmpty" class="muted pad">Select a stock to see its chart and signals.</div>
+    <div id="detailBody" hidden>
+      <div class="dhead"><div><h2 id="dSym"></h2><div id="dName" class="muted"></div></div><div id="dPrice" class="dprice"></div></div>
+      <div id="dScore"></div>
+      <div class="chartTabs"><button data-range="1d" class="active">Intraday</button><button data-range="5d">5 days</button>
+        <span class="legend"><i style="background:#f5c542"></i>SMA 9 <i style="background:#4ea8ff"></i>SMA 20 <i style="background:#c77dff"></i>VWAP</span></div>
+      <div id="chart" class="chart"></div>
+      <div id="rsiChart" class="chart rsi"></div>
+      <ul id="dSignals" class="signals"></ul>
+      <div id="dStats" class="stats"></div>
+    </div>
+  </section>
+</main>
+<footer class="muted">
+  Data: Yahoo Finance public endpoints, fetched server-side by a scheduled GitHub Actions job (~every 10 min during US market hours; GitHub may delay scheduled runs). Page auto-refreshes every 60 s.
+  Score = heuristic sum of: daily move, relative volume, price vs SMA20, SMA9 vs SMA20, price vs VWAP, RSI extremes. Range −6…+6. It describes recent momentum, not the future.
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

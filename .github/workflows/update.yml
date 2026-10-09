@@ -1,0 +1,47 @@
+name: Update data & deploy Pages
+
+on:
+  schedule:
+    # every 10 min, Mon-Fri, 13:00-22:59 UTC (covers 9:30-16:00 ET in both EDT and EST, plus a post-close snapshot)
+    - cron: "*/10 13-22 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch market data (Yahoo Finance, server-side)
+        id: fetch
+        continue-on-error: true
+        run: python scripts/fetch_data.py site/data.json
+      - name: Fallback - keep previously published data if fetch failed
+        if: steps.fetch.outcome != 'success'
+        run: |
+          echo "::warning::Data fetch failed; keeping previously published data.json (page will show its age)"
+          curl -sf "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data.json" -o /tmp/prev.json \
+            && python -c "import json,sys; d=json.load(open('/tmp/prev.json')); sys.exit(0 if d.get('stocks') else 1)" \
+            && cp /tmp/prev.json site/data.json || echo "No previous data available; publishing empty data (page shows 'data unavailable')"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

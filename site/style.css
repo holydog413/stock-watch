@@ -1,0 +1,41 @@
+:root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--up:#26a641;--down:#f85149;--warn:#d29922;--accent:#4ea8ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+h1{font-size:20px;margin:0}.sub{color:var(--muted);font-size:12px;margin-left:8px}
+.status{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{padding:3px 10px;border-radius:999px;background:#21262d;font-weight:600;font-size:12px}
+.pill.open{background:rgba(38,166,65,.2);color:#3fb950}.pill.closed{background:rgba(248,81,73,.15);color:#ff7b72}.pill.ext{background:rgba(210,153,34,.18);color:#e3b341}
+button{background:#21262d;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;font:inherit}
+button:hover{border-color:var(--accent)}button.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.muted{color:var(--muted)}.pad{padding:16px}
+.disclaimer{margin:12px 16px 0;padding:10px 12px;border:1px solid var(--warn);background:rgba(210,153,34,.1);border-radius:8px;font-size:13px}
+main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;padding:16px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;min-width:0}
+.tabs,.chartTabs{display:flex;gap:6px;padding:10px;border-bottom:1px solid var(--line);flex-wrap:wrap;align-items:center}
+#tablewrap{overflow-x:auto;max-height:72vh;overflow-y:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid #21262d;white-space:nowrap}
+th{position:sticky;top:0;background:var(--panel);color:var(--muted);font-weight:600;font-size:12px;cursor:pointer}
+th:first-child,td:first-child{text-align:left}
+tr{cursor:pointer}tbody tr:hover{background:#1c2330}tr.sel{background:#1f2a3a}
+.sym{font-weight:700}.nm{display:block;color:var(--muted);font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.up{color:#3fb950}.down{color:#ff7b72}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.b-bull{background:rgba(38,166,65,.2);color:#3fb950}.b-bear{background:rgba(248,81,73,.18);color:#ff7b72}.b-neu{background:#21262d;color:var(--muted)}.b-na{background:transparent;color:var(--muted);font-weight:400}
+.rv-hot{color:#e3b341;font-weight:700}
+#detailBody{padding:0 0 12px}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 14px 4px}
+.dhead h2{margin:0;font-size:22px}.dprice{text-align:right;font-size:20px;font-weight:700}
+#dScore{padding:4px 14px 8px}
+.scorebar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--down),#444 50%,var(--up));position:relative;margin:6px 0 2px}
+.scorebar i{position:absolute;top:-4px;width:4px;height:16px;background:#fff;border-radius:2px}
+.chart{height:300px;margin:0 6px}.chart.rsi{height:110px;margin-top:4px}
+.legend{margin-left:auto;font-size:11px;color:var(--muted)}.legend i{display:inline-block;width:10px;height:3px;margin:0 3px 2px 8px;vertical-align:middle}
+.signals{list-style:none;margin:10px 14px;padding:0}.signals li{padding:6px 10px;margin:4px 0;border-radius:6px;background:#1c2330;border-left:3px solid var(--muted)}
+.signals li.pos{border-color:var(--up)}.signals li.neg{border-color:var(--down)}.signals li.warn{border-color:var(--warn)}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin:0 14px}
+.stats div{background:#1c2330;padding:6px 8px;border-radius:6px}.stats b{display:block;font-size:11px;color:var(--muted);font-weight:500}
+footer{padding:4px 16px 24px;font-size:12px}
+.err{color:#ff7b72;padding:16px}
+@media (max-width:860px){main{grid-template-columns:1fr;padding:10px}header{padding:10px}.sub{display:block;margin:0}.chart{height:240px}#tablewrap{max-height:none}.hide-sm{display:none}}
